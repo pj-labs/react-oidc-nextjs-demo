@@ -1,11 +1,12 @@
 import NextAuth from "next-auth";
 
 export default NextAuth({
+  secret: process.env.SECRET,
   providers: [
     {
-      id: "keats-test",
-      clientId: "keats-test",
-      clientSecret: "0fb704c4-3fbe-4432-8fb5-1c4c3e5232d2",
+      id: "ncats-next-auth-test",
+      clientId: "next-auth-test",
+      clientSecret: "NyUwABS68lTZq1lg1DzbE",
       name: "NCATS",
       type: "oauth",
       wellKnown: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration",

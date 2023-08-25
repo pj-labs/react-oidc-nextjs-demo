@@ -9,9 +9,9 @@ export default function Home() {
 
     useEffect(() => {
         if (!session) {
-            signIn();
+            signIn('credentials');
         }
-    }, []);
+    }, [session, window]);
 
   return (
     <main
