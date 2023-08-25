@@ -3,12 +3,11 @@ import NextAuth from "next-auth";
 export default NextAuth({
   providers: [
     {
-      id: "ncats",
+      id: "ncats-next-auth-test",
       clientId: "next-auth-test",
       clientSecret: "Avlx5A6R0whQwLy-3zaQI",
       name: "NCATS",
       type: "oauth",
-      wellKnown: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration",
       token: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/oidc/token",
       userinfo: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/me",
       authorization: {
