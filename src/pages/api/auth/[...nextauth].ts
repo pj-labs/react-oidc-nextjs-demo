@@ -8,13 +8,14 @@ export default NextAuth({
       clientSecret: "Avlx5A6R0whQwLy-3zaQI",
       name: "NCATS",
       type: "oauth",
-      token: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/oidc/token",
-      userinfo: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/me",
+      wellKnown: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration",
+      //token: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/oidc/token",
+      //userinfo: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/me",
       authorization: {
-        url: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/authorize",
+        //url: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/authorize",
         params: {scope: "openid profile email offline"},
       },
-      issuer: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST",
+      //issuer: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST",
       profile(profile) {
         console.log('profile ', profile)
         return {
