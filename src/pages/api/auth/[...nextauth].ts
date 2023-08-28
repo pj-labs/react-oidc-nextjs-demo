@@ -14,13 +14,10 @@ export default NextAuth({
 			type: 'oauth',
 			token: 'https://github.com/login/oauth/access_token',
 			userinfo: 'https://api.github.com/user',
-			//token: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/oidc/token",
-			//userinfo: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/me",
 			authorization: {
 				url: 'https://github.com/login/oauth/authorize',
 				params: { scope: 'openid profile email offline' },
 			},
-			//issuer: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST",
 			profile(profile) {
 				console.log('profile ', profile);
 				return {
