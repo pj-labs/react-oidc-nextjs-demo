@@ -1,7 +1,12 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 export default function Home() {
-	const { data: session, status } = useSession({
+	const {
+		data: session,
+		status,
+		update,
+	} = useSession({
 		required: true,
 		onUnauthenticated() {
 			console.log('Home status:', status);
@@ -9,12 +14,16 @@ export default function Home() {
 		},
 	});
 
+	useEffect(() => {
+		update();
+	}, []);
+
 	return (
 		<>
 			<main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
 				{session ? (
 					<>
-						Status: Logged in as {session?.user?.profile?.username}
+						Status: Logged in as {session?.user?.id}
 						<button type={'button'} onClick={() => signOut()}>
 							Log out
 						</button>

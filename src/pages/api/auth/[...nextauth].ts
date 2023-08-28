@@ -65,12 +65,12 @@ export default NextAuth({
 			}
 			return token;
 		},
-		async session({ session, token }) {
+		async session({ session, token, user }) {
 			if (token && session.user) {
 				session.user.accessToken = token.accessToken;
 				session.user.profile = token.profile;
 			}
-			console.log('session:', session);
+			console.log('user:', user);
 			return session;
 		},
 	},
