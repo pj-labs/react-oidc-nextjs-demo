@@ -37,9 +37,8 @@ export default NextAuth({
 			wellKnown: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration',
 			authorization: { params: { scope: 'openid email profile' } },
 			profile(profile) {
-				console.log('profile:', profile);
 				return {
-					id: profile.email,
+					id: profile.username,
 					name: profile.name,
 					email: profile.email,
 				};
@@ -48,22 +47,31 @@ export default NextAuth({
 	],
 	debug: true,
 	callbacks: {
-		async signIn({ user, account, profile, email, credentials }) {
-			console.log('account:', account);
-			return true;
+		async signIn({ account }) {
+			return !!(account && account?.access_token);
 		},
 		async redirect({ url, baseUrl }) {
+			// Allows relative callback URLs
+			if (url.startsWith('/')) return `${baseUrl}${url}`;
+			// Allows callback URLs on the same origin
+			else if (new URL(url).origin === baseUrl) return url;
 			return baseUrl;
 		},
-		async session({ session, token, user }) {
-			console.log('session:', session);
-			return session;
-		},
-		async jwt({ token, user, account, profile, isNewUser }) {
-			if (account?.accessToken) {
-				token.accessToken = account.accessToken;
+		async jwt({ token, user, account, profile }) {
+			// Saves accessToken and profile in session object
+			if (account?.access_token) {
+				token.accessToken = account.access_token;
+				token.profile = profile;
 			}
 			return token;
+		},
+		async session({ session, token }) {
+			if (token && session.user) {
+				session.user.accessToken = token.accessToken;
+				session.user.profile = token.profile;
+			}
+			console.log('session:', session);
+			return session;
 		},
 	},
 });

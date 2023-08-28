@@ -4,8 +4,6 @@ export default function Home() {
 	const { data: session, status } = useSession({
 		required: true,
 		onUnauthenticated() {
-			// The user is not authenticated, handle it here.
-			console.log('Home session:', session);
 			console.log('Home status:', status);
 			signIn();
 		},
@@ -16,7 +14,7 @@ export default function Home() {
 			<main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
 				{session ? (
 					<>
-						Status: Logged in as {session?.user?.email}
+						Status: Logged in as {session?.user?.profile?.username}
 						<button type={'button'} onClick={() => signOut()}>
 							Log out
 						</button>
