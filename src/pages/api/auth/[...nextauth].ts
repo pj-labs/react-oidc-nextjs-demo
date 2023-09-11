@@ -5,7 +5,7 @@ export default NextAuth({
 		/*GithubProvider({
 			clientId: 'd6ca8737e1b3321d6ae7',
 			clientSecret: '6976ce59f65264945ef829b0d28fe63f2d3aaf17',
-		}),*/
+		}),
 		{
 			id: 'd6ca8737e1b3321d6ae7',
 			clientId: 'd6ca8737e1b3321d6ae7',
@@ -26,16 +26,19 @@ export default NextAuth({
 					email: profile.email,
 				};
 			},
-		},
+		},*/
 		{
-			id: 'next-auth-demo',
-			clientId: 'next-auth-demo',
-			clientSecret: '73bf8dc7-43e0-48d9-862a-ceaef766c97a',
+			id: 'pres',
+			client: {
+				client_id: 'pres-local',
+				token_endpoint_auth_method: 'none',
+			},
 			name: 'NCATS',
 			type: 'oauth',
 			idToken: true,
 			wellKnown: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration',
-			authorization: { params: { scope: 'openid email profile' } },
+			authorization: { params: { scope: 'openid profile email offline_access external_groups access_roles groups custom_claims provider_claims' } },
+			userinfo: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/userinfo',
 			profile(profile) {
 				return {
 					id: profile.username,
@@ -63,6 +66,9 @@ export default NextAuth({
 				token.accessToken = account.access_token;
 				token.profile = profile;
 			}
+			console.log('jwt user:', user);
+			console.log('jwt account:', account);
+			console.log('jwt profile:', profile);
 			return token;
 		},
 		async session({ session, token, user }) {
@@ -70,7 +76,7 @@ export default NextAuth({
 				session.user.accessToken = token.accessToken;
 				session.user.profile = token.profile;
 			}
-			console.log('user:', user);
+			//console.log('token:', token);
 			return session;
 		},
 	},
