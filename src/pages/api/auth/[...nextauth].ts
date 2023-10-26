@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 
+
 export default NextAuth({
 	providers: [
 		/*GithubProvider({
@@ -37,8 +38,13 @@ export default NextAuth({
 			type: 'oauth',
 			idToken: true,
 			wellKnown: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/.well-known/openid-configuration',
-			authorization: { params: { scope: 'openid profile email offline_access external_groups access_roles groups custom_claims provider_claims' } },
-			userinfo: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/userinfo',
+			authorization: { params: { scope: 'openid profile email' } },
+			userinfo: {
+				url: "https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST/me",
+				async request(context){
+					return await context.client.userinfo(context.tokens?.access_token??'')
+				}
+			},
 			profile(profile) {
 				return {
 					id: profile.username,
@@ -66,8 +72,6 @@ export default NextAuth({
 				token.accessToken = account.access_token;
 				token.profile = profile;
 			}
-			console.log('jwt user:', user);
-			console.log('jwt account:', account);
 			console.log('jwt profile:', profile);
 			return token;
 		},

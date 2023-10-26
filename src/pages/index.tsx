@@ -1,13 +1,19 @@
 import {signIn, signOut, useSession} from 'next-auth/react';
+import {useEffect} from 'react';
 
 export default function Home() {
-	const { data: session, status } = useSession({
+	const { data: session, status,update } = useSession({
 		required: true,
 		onUnauthenticated() {
 			console.log('Home status:', status);
 			signIn('pres');
 		},
 	});
+
+	useEffect(() => {
+		update('pres');
+	},[]);
+
 	return (
 		<>
 			<main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
