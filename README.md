@@ -1,4 +1,4 @@
-# Next Auth demo with NCATS
+# Next Auth demo with @axa-fr/react-oidc library and NCATS
 
 1. Run the development server:
     ```bash
