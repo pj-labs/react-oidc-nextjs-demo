@@ -1,4 +1,5 @@
 # OIDC/OAuth2 authentication with NextJS and `@axa-fr/react-oidc` library
+This project is a sample of how to use [@axa-fr/react-oidc](https://github.com/AxaFrance/oidc-client/tree/main/packages/react-oidc#axa-frreact-oidc) library with NextJS.
 
 1. Run the development server:
     ```bash
