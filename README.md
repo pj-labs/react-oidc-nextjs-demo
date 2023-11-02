@@ -1,4 +1,4 @@
-# OIDC/OAuth2 authentication with NextJS and `@axa-fr/react-oidc library`
+# OIDC/OAuth2 authentication with NextJS and `@axa-fr/react-oidc` library
 
 1. Run the development server:
     ```bash
