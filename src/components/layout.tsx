@@ -1,6 +1,7 @@
 import { OidcProvider } from '@axa-fr/react-oidc';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Loading from '@/components/Loading';
 
 const configuration = {
 	client_id: 'pres',
@@ -10,26 +11,24 @@ const configuration = {
 	authority: 'https://auth.ncats.nih.gov/_api/v2/auth/NCI-CCR-TEST',
 };
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
 	const router = useRouter();
-	const withCustomHistory= () => {
+	const withCustomHistory = () => {
 		return {
-			replaceState: (url:any) => {
+			replaceState: (url: any) => {
 				router.replace({
 					pathname: url,
 				}).then(() => {
-						// eslint-disable-next-line no-undef
-						window.dispatchEvent(new Event('popstate'));
-					},
-				);
+					// eslint-disable-next-line no-undef
+					window.dispatchEvent(new Event('popstate'));
+				});
 			},
 		};
 	};
-	return (
-		<>
-			<OidcProvider configuration={configuration} withCustomHistory={withCustomHistory} >
+	return (<>
+			<OidcProvider loadingComponent={Loading}
+										configuration={configuration} withCustomHistory={withCustomHistory}>
 				<main>{children}</main>
 			</OidcProvider>
-		</>
-	);
+		</>);
 }
