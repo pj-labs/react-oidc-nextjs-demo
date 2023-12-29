@@ -1,6 +1,22 @@
 import '@/styles/globals.css';
 import { AppProps } from 'next/app';
-import Layout from '@/components/layout';
+import AppProvider from '@/components/layout';
+import CoreRouteGuard from '@/CoreRouteGuard';
+import { FetchInterceptor } from '@/FetchClient';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+// Create a React query client
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			refetchOnMount: false,
+			refetchOnReconnect: true,
+			//gcTime: STALE_TIME,
+		},
+	},
+});
 
 export default function App(props: AppProps) {
 	const {
@@ -9,8 +25,15 @@ export default function App(props: AppProps) {
 	} = props;
 
 	return (
-		<Layout>
-			<Component {...pageProps} />
-		</Layout>
+		<AppProvider>
+			<FetchInterceptor>
+				<QueryClientProvider client={queryClient}>
+				<CoreRouteGuard>
+					<Component {...pageProps} />
+				</CoreRouteGuard>
+					<ReactQueryDevtools initialIsOpen={false} />
+				</QueryClientProvider>
+			</FetchInterceptor>
+		</AppProvider>
 	);
 }
